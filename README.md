@@ -1,3 +1,3 @@
 # mern-restaurants-app
-learned from freecodecamp
-using react-router-dom v6
+I just learned from freecodecamp,
+i use react-router-dom v6
