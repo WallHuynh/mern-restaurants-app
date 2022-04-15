@@ -5,21 +5,22 @@ import RestaurantDataService from '../services/restaurants'
 export default function Addreview(props) {
   let initialReviewState = ''
   let editing = false
-  const location = useLocation()
-  console.log('location.state', location.state)
-
+  const [review, setReview] = useState(initialReviewState)
+  const [submitted, setSubmitted] = useState(false)
   let { id } = useParams()
+  const location = useLocation()
+  
+  console.log('location.state', location.state)
 
   if (location.state && location.state.currentReview) {
     editing = true
     initialReviewState = location.state.currentReview.text
   }
-  const [review, setReview] = useState(initialReviewState)
-  const [submitted, setSubmitted] = useState(false)
 
   const handleInputChange = e => {
     setReview(e.target.value)
   }
+
   const saveReview = () => {
     var data = {
       text: review,

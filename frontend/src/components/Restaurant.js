@@ -13,6 +13,7 @@ export default function Restaurant(props) {
     reviews: [],
   }
   const [restaurant, setRestaurant] = useState(initialRestaurantState)
+
   const getRestaurant = ID => {
     RestaurantDataService.get(ID)
       .then(response => {
@@ -79,7 +80,7 @@ export default function Restaurant(props) {
                               Delete
                             </a>
                             <Link
-                              to={'/restaurants/' + id + '/review'}
+                              to={`/restaurants/${id}/review`}
                               state={{ currentReview: review }}
                               className='btn btn-primary col-lg-5 mx-1 mb-1'>
                               Edit
