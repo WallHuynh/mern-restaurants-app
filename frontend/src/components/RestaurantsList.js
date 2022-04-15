@@ -27,42 +27,48 @@ export default function RestaurantsList(props) {
     setSearchZip(searchZip)
   }
 
-  function retrieveRestaurants() {
-    RestaurantDataService.getAll()
-      .then(response => {
-        console.log(response.data)
-        setRestaurants(response.data.restaurants)
-      })
-      .catch(e => console.log(e))
+  async function retrieveRestaurants() {
+    try {
+      const response = await RestaurantDataService.getAll()
+      console.log(response.data)
+      setRestaurants(response.data.restaurants).catch(e => console.log(e))
+    } catch (err) {
+      console.log(err)
+    }
   }
-  function retrieveCuisines() {
-    RestaurantDataService.getCuisines()
-      .then(response => {
-        console.log(response.data)
-        setCuisines(['All Cuisines'].concat(response.data))
-      })
-      .catch(e => console.log(e))
+
+  async function retrieveCuisines() {
+    try {
+      const response = await RestaurantDataService.getCuisines()
+      console.log(response.data)
+      setCuisines(['All Cuisines'].concat(response.data))
+    } catch (err) {
+      console.log(e)
+    }
   }
 
   function refreshList() {
     retrieveRestaurants()
   }
 
-  function find(query, by) {
-    RestaurantDataService.find(query, by)
-      .then(response => {
-        console.log(response.data)
-        setRestaurants(response.data.restaurants)
-      })
-      .catch(e => console.log(e))
+  async function find(query, by) {
+    try {
+      const response = await RestaurantDataService.find(query, by)
+      console.log(response.data)
+      setRestaurants(response.data.restaurants)
+    } catch (err) {
+      console.log(e)
+    }
   }
 
   function findByName() {
     find(searchName, 'name')
   }
+
   function findByZip() {
     find(searchZip, 'zipcode')
   }
+  
   function findByCuisine() {
     if (searchCuisine == 'All Cuisines') {
       refreshList()

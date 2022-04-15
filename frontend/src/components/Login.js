@@ -8,14 +8,17 @@ export default function Login(props) {
   }
   const navigate = useNavigate()
   const [user, setUser] = useState(initialUserState)
+
   const handleInputChange = event => {
     const { name, value } = event.target
     setUser(prevUser => ({ ...prevUser, [name]: value }))
   }
+
   const login = () => {
     props.login(user)
     navigate('/restaurants')
   }
+
   return (
     <div className='submit-form'>
       <div>

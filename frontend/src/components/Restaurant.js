@@ -14,32 +14,36 @@ export default function Restaurant(props) {
   }
   const [restaurant, setRestaurant] = useState(initialRestaurantState)
 
-  const getRestaurant = ID => {
-    RestaurantDataService.get(ID)
-      .then(response => {
-        setRestaurant(response.data)
-        console.log(response.data)
-      })
-      .catch(e => console.log(e))
+  const getRestaurant = async ID => {
+    try {
+      const response = await RestaurantDataService.get(ID)
+      setRestaurant(response.data)
+      console.log(response.data)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
     getRestaurant(id)
   }, [id])
 
-  const deleteReview = (reviewId, index) => {
-    RestaurantDataService.deleteReview(reviewId, props.user.id)
-      .then(response => {
-        setRestaurant(prevState => {
-          prevState.reviews.splice(index, 1)
-          return {
-            ...prevState,
-          }
-        })
+  const deleteReview = async (reviewId, index) => {
+    try {
+      const response = await RestaurantDataService.deleteReview(
+        reviewId,
+        props.user.id
+      )
+      setRestaurant(prevState => {
+        prevState.reviews.splice(index, 1)
+        return {
+          ...prevState,
+        }
       })
-      .catch(e => console.log(e))
+    } catch (e) {
+      console.log(e)
+    }
   }
-
   return (
     <div>
       <div>Your ID: {id}</div>

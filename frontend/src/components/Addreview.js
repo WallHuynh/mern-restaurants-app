@@ -9,7 +9,7 @@ export default function Addreview(props) {
   const [submitted, setSubmitted] = useState(false)
   let { id } = useParams()
   const location = useLocation()
-  
+
   console.log('location.state', location.state)
 
   if (location.state && location.state.currentReview) {
@@ -21,7 +21,7 @@ export default function Addreview(props) {
     setReview(e.target.value)
   }
 
-  const saveReview = () => {
+  const saveReview = async () => {
     var data = {
       text: review,
       name: props.user.name,
@@ -29,20 +29,22 @@ export default function Addreview(props) {
       restaurant_id: id,
     }
     if (editing) {
-      data.review_id = location.state.currentReview._id
-      RestaurantDataService.updateReview(data)
-        .then(res => {
-          setSubmitted(true)
-          console.log(res.data)
-        })
-        .catch(err => console.log(err))
+      try {
+        data.review_id = location.state.currentReview._id
+        const res = await RestaurantDataService.updateReview(data)
+        setSubmitted(true)
+        console.log(res.data)
+      } catch (e) {
+        console.log(e)
+      }
     } else {
-      RestaurantDataService.createReview(data)
-        .then(res => {
-          setSubmitted(true)
-          console.log(res.data)
-        })
-        .catch(err => console.log(err))
+      try {
+        const res = await resRestaurantDataService.createReview(data)
+        setSubmitted(true)
+        console.log(res.data)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
